@@ -48,11 +48,21 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/commande-service:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/paiement-service:latest
 
-      # 6. Setup Helm
+      # 6. Setup Kind (cluster Kubernetes local)
+      - name: Setup Kind Kubernetes cluster
+        uses: engineerd/setup-kind@v0.9.0
+        with:
+          version: v0.20.0
+
+      # 7. Set KUBECONFIG pour Helm
+      - name: Configure KUBECONFIG
+        run: echo "KUBECONFIG=$(kind get kubeconfig-path --name kind)" >> $GITHUB_ENV
+
+      # 8. Setup Helm
       - name: Setup Helm
         uses: azure/setup-helm@v3
 
-      # 7. Deploy services avec Helm
+      # 9. Deploy services avec Helm
       - name: Deploy Config Service
         run: helm upgrade --install config-service ./charts/config-service
 
