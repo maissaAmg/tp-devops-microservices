@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: commande-service
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 8082
+persistence:
+  enabled: true
+  claimName: commande-pvc

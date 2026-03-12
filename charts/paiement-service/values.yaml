@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: paiement-service
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 8083
+persistence:
+  enabled: true
+  claimName: postgres-pvc-paiement
